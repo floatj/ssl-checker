@@ -7,6 +7,7 @@ interface IResolvedValues {
   validFrom: string;
   validTo: string;
   daysRemaining: number;
+  subject_cn: string;
 }
 
 const checkPort = (port: unknown): boolean =>
@@ -54,6 +55,7 @@ const sslChecker = (
           const {
             valid_from,
             valid_to,
+            subject
           } = (res.connection as tls.TLSSocket).getPeerCertificate();
 
           const validTo = new Date(valid_to);
@@ -65,6 +67,7 @@ const sslChecker = (
                 .authorized as boolean) || false,
             validFrom: new Date(valid_from).toISOString(),
             validTo: validTo.toISOString(),
+            subject_cn: subject.CN
           });
         }
       );
